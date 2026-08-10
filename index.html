@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station Spatiale - Système Intégré (BETA)</title>
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+    
+    <nav id="menu-navigation">
+        <button class="nav-btn" data-target="chambre">CHAMBRE (GAUCHE)</button>
+        <button class="nav-btn" data-target="module-b">MODULE B (HAUT)</button>
+        <button class="nav-btn" data-target="cockpit">COCKPIT (BAS)</button>
+    </nav>
+
+    <div id="app-wrapper"> 
+        <div id="pin-container"> 
+
+            <!-- CHAMBRE : En travaux -->
+            <section id="room-chambre" class="scene">
+                <div class="layer">
+                    <img src="images/chambre.png" alt="Chambre" class="bg-image">
+                </div>
+                <!-- Overlay d'assombrissement et banderole de travaux -->
+                <div class="construction-overlay">
+                    <div class="construction-banner">🚧 EN TRAVAUX 🚧</div>
+                </div>
+            </section>
+
+            <!-- MODULE B : Intact et complet pour la Beta -->
+            <section id="room-module-b" class="scene">
+                <div id="module-b-arriere-plan" class="layer">
+                    <img src="images/module Bbis.png" alt="Intérieur" class="bg-image">
+                </div>
+                
+                <div id="module-b-decors" class="layer">
+                    <div id="decor-sg" title="Zone d'accès restreint"></div>
+                </div>
+
+                <div id="module-b-milieu" class="layer" style="z-index: 10;">
+                    <h2 style="color: white; text-shadow: 2px 2px 10px #00ffcc; text-align: center; margin-top: 5%;">Laboratoire de Recherche B</h2>
+                    <img src="images/patxi.png" alt="Patxi" class="crew-member" id="char-patxi" data-presentation="images/p-patxi.png">
+                    <img src="images/mateo.png" alt="Mateo" class="crew-member" id="char-mateo" data-presentation="images/p-mateo.png">
+                    <img src="images/louis.png" alt="Louis" class="crew-member" id="char-louis" data-presentation="images/p-louis.png">
+                    <img src="images/jb.png" alt="JB" class="crew-member" id="char-jb" data-presentation="images/p-jb.png">
+                    <img src="images/lila.png" alt="Lila" class="crew-member" id="char-lila" data-presentation="images/p-lila.png">
+                    
+                    <!-- L'OBJET TABLE AJOUTÉ ICI -->
+                    <img src="images/table.png" alt="Table du laboratoire" id="module-b-table">
+                    <img src="images/chap.png" alt="chap" id="module-b-chap">
+                    <img src="images/camion1.tiff" alt="chap" id="module-b-camion1">
+                    <img src="images/camion2.png" alt="chap" id="module-b-camion2">
+                </div>
+            </section>
+
+            <!-- COCKPIT : En travaux -->
+            <section id="room-cockpit" class="scene">
+                <div id="cockpit-arriere-plan" class="layer">
+                    <img src="images/cocpit.png" alt="Vue du cockpit" class="bg-image">
+                </div>
+                <!-- Overlay d'assombrissement et banderole de travaux -->
+                <div class="construction-overlay">
+                    <div class="construction-banner">🚧 EN TRAVAUX 🚧</div>
+                </div>
+            </section>
+        </div> 
+    </div> 
+
+    <!-- Overlays interactifs -->
+    <div id="main-overlay" class="overlay">
+        <div class="overlay-content">
+            <span class="close-btn" id="close-crew">&times;</span>
+            <img src="" alt="Fiche" id="overlay-image-zoom">
+            <p>-- TRANSMISSION EN COURS --</p>
+        </div>
+    </div>
+
+    <!-- Conservés pour éviter les erreurs JavaScript s'ils sont appelés par erreur -->
+    <div id="overlay-infos-menu" class="overlay">
+        <div class="terminal-content">
+            <span class="close-btn" id="close-infos">&times;</span>
+            <div class="terminal-header">SYSTÈME CENTRAL</div>
+            <div class="menu-container">
+                <button class="terminal-btn" data-file="reglement.pdf">REGLEMENT</button>
+                <button class="terminal-btn" data-file="adhesion.pdf">ADHESION</button>
+                <button class="terminal-btn" data-file="pre-dossier.pdf">DOSS</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="overlay-gallery" class="overlay">
+        <div class="gallery-wrapper">
+            <span class="close-btn" id="close-gallery">&times;</span>
+            <div class="gallery-header">
+                <h2 class="gallery-title">COMBARS</h2>
+            </div>
+            <div class="gallery-grid">
+                <div class="combar-slot">
+                    <img src="images/tablar.png" alt="Tablar" class="combar-image">
+                </div>
+                <div class="combar-slot">
+                    <img src="images/limoges.png" alt="Limoges" class="combar-image">
+                </div>
+                <div class="combar-slot">Photo 3</div>
+                <div class="combar-slot">Photo 4</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="overlay-sg" class="overlay">
+        <div class="terminal-content" style="width: 450px;">
+            <span class="close-btn" id="close-sg">&times;</span>
+            <div class="terminal-header" style="color: #cc00ff; border-color: #cc00ff;">PROTOCOLE SG</div>
+            <div id="sg-auth-zone">
+                <p style="color: #cc00ff;">CODE D'ACCÈS :</p>
+                <input type="password" id="sg-pwd" class="terminal-input" placeholder="****">
+                <button id="sg-submit" class="terminal-btn" style="margin-top: 20px; border-color: #cc00ff; color: #cc00ff;">VALIDER</button>
+                <p id="sg-error" style="color: #ff4444; display: none; margin-top: 15px;">REFUSÉ</p>
+                <button class="terminal-btn close-btn-internal" style="margin-top: 30px; border-color: #ff4444; color: #ff4444; width: 100%;">QUITTER</button>
+            </div>
+            <div id="sg-secret-zone" class="menu-container" style="display: none;">
+                <button class="terminal-btn">COMPLETE</button>
+                <button class="terminal-btn">DS</button>
+                <button class="terminal-btn close-btn-internal" style="margin-top: 20px; border-color: #ff4444; color: #ff4444;">DÉCONNEXION</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="script.js"></script> 
+</body>
+</html>
