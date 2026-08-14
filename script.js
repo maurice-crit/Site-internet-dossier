@@ -1,6 +1,9 @@
 const pinContainer = document.querySelector("#pin-container");
 const crewMembers = document.querySelectorAll(".crew-member"); 
-const overlayImage = document.querySelector("#overlay-image-zoom"); 
+
+// Cibles de l'effet Glitch
+const glitchTarget = document.querySelector("#glitch-target");
+const glitchLayers = document.querySelectorAll(".glitch__img");
 
 // Dictionnaires des Overlays
 const overlays = {
@@ -10,10 +13,10 @@ const overlays = {
     sg: document.querySelector("#overlay-sg")
 };
 
-// 1. DÉPART MODULE B (La caméra se place directement sur le module B pour la Beta)
+// 1. DÉPART MODULE B
 gsap.set(pinContainer, { x: "-100vw", y: "0vh" });
 
-// 2. NAVIGATION (Déplacement en 2D sur la carte)
+// 2. NAVIGATION 
 document.querySelectorAll(".nav-btn").forEach(btn => {
     btn.addEventListener("click", (e) => {
         const target = e.target.dataset.target;
@@ -35,11 +38,29 @@ document.querySelectorAll(".nav-btn").forEach(btn => {
     });
 });
 
-// 3. ACTIONS CLIQUABLES (Fiches personnages restants dans le module B)
+// 3. ACTIONS CLIQUABLES (Fiches personnages avec GLITCH)
 crewMembers.forEach(member => {
     member.addEventListener("click", () => {
-        overlayImage.src = member.dataset.presentation;
+        const photoSrc = member.dataset.presentation;
+        
+        // 1. Affecter l'image aux 3 calques du glitch
+        glitchLayers.forEach(layer => {
+            layer.style.backgroundImage = `url('${photoSrc}')`;
+            layer.style.opacity = "0"; // Reset avant animation
+        });
+
+        // 2. Lancer l'overlay
         gsap.to(overlays.crew, { autoAlpha: 1, duration: 0.3 });
+        
+        // 3. Ajouter la classe pour démarrer le glitch
+        glitchTarget.classList.add('glitch-active');
+
+        // 4. Stopper le glitch après 0.6s (effet d'interférence court)
+        setTimeout(() => {
+            glitchTarget.classList.remove('glitch-active');
+            // Garder uniquement l'image de base visible
+            glitchLayers[0].style.opacity = "1";
+        }, 600);
     });
 });
 
@@ -65,7 +86,12 @@ document.querySelectorAll(".terminal-btn[data-file]").forEach(btn => {
 });
 
 // 6. FERMETURE UNIFIÉE
-const closeAll = () => gsap.to(Object.values(overlays), { autoAlpha: 0, duration: 0.2 });
+const closeAll = () => {
+    gsap.to(Object.values(overlays), { autoAlpha: 0, duration: 0.2 });
+    
+    // Réinitialisation du glitch à la fermeture
+    glitchTarget.classList.remove('glitch-active');
+};
 
 document.querySelectorAll(".close-btn, .close-btn-internal").forEach(btn => btn.addEventListener("click", closeAll));
 window.addEventListener("keydown", (e) => { if (e.key === "Escape") closeAll(); });

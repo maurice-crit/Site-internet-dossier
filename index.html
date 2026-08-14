@@ -22,7 +22,6 @@
                 <div class="layer">
                     <img src="images/chambre.png" alt="Chambre" class="bg-image">
                 </div>
-                <!-- Overlay d'assombrissement et banderole de travaux -->
                 <div class="construction-overlay">
                     <div class="construction-banner">🚧 EN TRAVAUX 🚧</div>
                 </div>
@@ -46,7 +45,6 @@
                     <img src="images/jb.png" alt="JB" class="crew-member" id="char-jb" data-presentation="images/p-jb.png">
                     <img src="images/lila.png" alt="Lila" class="crew-member" id="char-lila" data-presentation="images/p-lila.png">
                     
-                    <!-- L'OBJET TABLE AJOUTÉ ICI -->
                     <img src="images/table.png" alt="Table du laboratoire" id="module-b-table">
                     <img src="images/chap.png" alt="chap" id="module-b-chap">
                     <img src="images/camion1.tiff" alt="chap" id="module-b-camion1">
@@ -59,7 +57,6 @@
                 <div id="cockpit-arriere-plan" class="layer">
                     <img src="images/cocpit.png" alt="Vue du cockpit" class="bg-image">
                 </div>
-                <!-- Overlay d'assombrissement et banderole de travaux -->
                 <div class="construction-overlay">
                     <div class="construction-banner">🚧 EN TRAVAUX 🚧</div>
                 </div>
@@ -67,16 +64,25 @@
         </div> 
     </div> 
 
-    <!-- Overlays interactifs -->
+    <!-- OVERLAYS INTERACTIFS -->
+    
+    <!-- L'Overlay Équipage avec GLITCH -->
     <div id="main-overlay" class="overlay">
         <div class="overlay-content">
             <span class="close-btn" id="close-crew">&times;</span>
-            <img src="" alt="Fiche" id="overlay-image-zoom">
-            <p>-- TRANSMISSION EN COURS --</p>
+            
+            <!-- Structure Glitch de la fiche -->
+            <div class="glitch-container" id="glitch-target">
+                <div class="glitch__img"></div>
+                <div class="glitch__img"></div>
+                <div class="glitch__img"></div>
+            </div>
+
+            <p style="color: #00ffcc; letter-spacing: 2px;">-- TRANSMISSION EN COURS --</p>
         </div>
     </div>
 
-    <!-- Conservés pour éviter les erreurs JavaScript s'ils sont appelés par erreur -->
+    <!-- Autres overlays inchangés -->
     <div id="overlay-infos-menu" class="overlay">
         <div class="terminal-content">
             <span class="close-btn" id="close-infos">&times;</span>
