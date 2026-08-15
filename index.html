@@ -8,11 +8,23 @@
 </head>
 <body>
     
-    <nav id="menu-navigation">
-        <button class="nav-btn" data-target="chambre">CHAMBRE (GAUCHE)</button>
-        <button class="nav-btn" data-target="module-b">MODULE B (HAUT)</button>
-        <button class="nav-btn" data-target="cockpit">COCKPIT (BAS)</button>
-    </nav>
+    <!-- NOUVEAU MENU MINIMAP (À placer au même endroit que l'ancien nav) -->
+<div id="minimap-container">
+    <div class="minimap-title">CARTE TACTIQUE</div>
+    
+    <!-- Les traits reliant les pièces (SVG) -->
+    <svg id="minimap-lines" width="100%" height="100%">
+        <!-- Ligne horizontale (Chambre -> Module B) -->
+        <line x1="25%" y1="40%" x2="75%" y2="40%" stroke="#00ffcc" stroke-width="2" stroke-dasharray="4,4" />
+        <!-- Ligne verticale (Module B -> Cockpit) -->
+        <line x1="75%" y1="40%" x2="75%" y2="80%" stroke="#00ffcc" stroke-width="2" stroke-dasharray="4,4" />
+    </svg>
+
+    <!-- Les nœuds/boutons interactifs -->
+    <button class="nav-btn-map" id="btn-chambre" data-target="chambre">CHAMBRE</button>
+    <button class="nav-btn-map" id="btn-module-b" data-target="module-b">MODULE SG</button>
+    <button class="nav-btn-map" id="btn-cockpit" data-target="cockpit">COCKPIT</button>
+</div>
 
     <div id="app-wrapper"> 
         <div id="pin-container"> 
@@ -38,7 +50,6 @@
                 </div>
 
                 <div id="module-b-milieu" class="layer" style="z-index: 10;">
-                    <h2 style="color: white; text-shadow: 2px 2px 10px #00ffcc; text-align: center; margin-top: 5%;">Laboratoire de Recherche B</h2>
                     <img src="images/patxi.png" alt="Patxi" class="crew-member" id="char-patxi" data-presentation="images/p-patxi.png">
                     <img src="images/mateo.png" alt="Mateo" class="crew-member" id="char-mateo" data-presentation="images/p-mateo.png">
                     <img src="images/louis.png" alt="Louis" class="crew-member" id="char-louis" data-presentation="images/p-louis.png">
@@ -62,6 +73,7 @@
                 </div>
             </section>
         </div> 
+        <div id="hologram-transition"></div>
     </div> 
 
     <!-- OVERLAYS INTERACTIFS -->
