@@ -57,7 +57,7 @@ body {
 #char-yanisr { left: 22%; bottom: 8%; height: 80vh; z-index: 10; clip-path: inset(36% 26% 7% 43%); } 
 #char-ln     { left: 45%; bottom: 35%; height: 20vh; z-index: 5; }  
 #char-jules  { left: 75%; bottom: 5%;  height: 40vh; z-index: 15; } 
-#char-patxi  { left: 78%; bottom: 52%; height: 23vh; z-index: 10; } 
+#char-patxi  { left: 78%; bottom: 50%; height: 23vh; z-index: 10; } 
 #char-mateo  { left: 43%; bottom: 22%;  height: 35vh; z-index: 15; clip-path: polygon(28% 0, 48% 0, 71% 84%, 38% 99%);} 
 #char-louis  { left: 13%; bottom: 17%; height: 65vh; z-index: 5; clip-path: polygon(50% 51%, 70% 36%, 67% 91%, 12% 54%);}  
 #char-jb { left: 44%; bottom: 19%; height: 55vh; z-index: 10; clip-path: polygon(63% 36%, 85% 36%, 78% 83%, 53% 82%); } 

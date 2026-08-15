@@ -13,6 +13,16 @@ const overlays = {
     sg: document.querySelector("#overlay-sg")
 };
 
+// --- EFFET ZERO-G (Apesanteur) POUR PATXI ---
+gsap.to("#char-patxi", {
+    y: "-12px",           // Monte de 15 pixels vers le haut
+    rotation: 2,          // Penche très légèrement de 2 degrés
+    duration: 3.5,        // Temps mis pour monter (mouvement lent)
+    ease: "sine.inOut",   // Courbe d'accélération douce (idéal pour flotter)
+    repeat: -1,           // Répète l'animation à l'infini
+    yoyo: true            // Fait l'aller-retour (monte, puis redescend)
+});
+
 // 1. DÉPART MODULE B
 gsap.set(pinContainer, { x: "-100vw", y: "0vh" });
 
