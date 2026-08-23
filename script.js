@@ -15,7 +15,7 @@ const overlays = {
 
 // --- EFFET ZERO-G (Apesanteur) POUR PATXI ---
 gsap.to("#char-patxi", {
-    y: "-12px",           // Monte de 15 pixels vers le haut
+    y: "-12px",           // Monte de 12 pixels vers le haut
     rotation: 2,          // Penche très légèrement de 2 degrés
     duration: 3.5,        // Temps mis pour monter (mouvement lent)
     ease: "sine.inOut",   // Courbe d'accélération douce (idéal pour flotter)

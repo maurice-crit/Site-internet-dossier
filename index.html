@@ -8,19 +8,15 @@
 </head>
 <body>
     
-    <!-- NOUVEAU MENU MINIMAP (À placer au même endroit que l'ancien nav) -->
+    <!-- NOUVEAU MENU MINIMAP -->
 <div id="minimap-container">
     <div class="minimap-title">CARTE TACTIQUE</div>
     
-    <!-- Les traits reliant les pièces (SVG) -->
     <svg id="minimap-lines" width="100%" height="100%">
-        <!-- Ligne horizontale (Chambre -> Module B) -->
         <line x1="25%" y1="40%" x2="75%" y2="40%" stroke="#00ffcc" stroke-width="2" stroke-dasharray="4,4" />
-        <!-- Ligne verticale (Module B -> Cockpit) -->
         <line x1="75%" y1="40%" x2="75%" y2="80%" stroke="#00ffcc" stroke-width="2" stroke-dasharray="4,4" />
     </svg>
 
-    <!-- Les nœuds/boutons interactifs -->
     <button class="nav-btn-map" id="btn-chambre" data-target="chambre">CHAMBRE</button>
     <button class="nav-btn-map" id="btn-module-b" data-target="module-b">MODULE SG</button>
     <button class="nav-btn-map" id="btn-cockpit" data-target="cockpit">COCKPIT</button>
@@ -29,7 +25,7 @@
     <div id="app-wrapper"> 
         <div id="pin-container"> 
 
-            <!-- CHAMBRE : En travaux -->
+            <!-- CHAMBRE -->
             <section id="room-chambre" class="scene">
                 <div class="layer">
                     <img src="images/chambre.png" alt="Chambre" class="bg-image">
@@ -39,62 +35,78 @@
                 </div>
             </section>
 
-            <!-- MODULE B : Intact et complet pour la Beta -->
+            <!-- MODULE B -->
             <section id="room-module-b" class="scene">
                 <div id="module-b-arriere-plan" class="layer">
-                    <img src="images/module Bbis.png" alt="Intérieur" class="bg-image">
+                    <!-- IMAGE DE FOND -->
+                    <img src="images/module Bbis.png" alt="Intérieur avec équipage" class="bg-image">
                 </div>
                 
-                <div id="module-b-decors" class="layer">
+                <!-- HITBOXES INTERACTIVES ET FAISCEAUX LUMINEUX -->
+                <div id="module-b-decors" class="layer" style="z-index: 20;">
                     <div id="decor-sg" title="Zone d'accès restreint"></div>
-                </div>
-
-                <div id="module-b-milieu" class="layer" style="z-index: 10;">
-                    <img src="images/patxi.png" alt="Patxi" class="crew-member" id="char-patxi" data-presentation="images/p-patxi.png">
-                    <img src="images/mateo.png" alt="Mateo" class="crew-member" id="char-mateo" data-presentation="images/p-mateo.png">
-                    <img src="images/louis.png" alt="Louis" class="crew-member" id="char-louis" data-presentation="images/p-louis.png">
-                    <img src="images/jb.png" alt="JB" class="crew-member" id="char-jb" data-presentation="images/p-jb.png">
-                    <img src="images/lila.png" alt="Lila" class="crew-member" id="char-lila" data-presentation="images/p-lila.png">
                     
-                    <img src="images/table.png" alt="Table du laboratoire" id="module-b-table">
-                    <img src="images/chap.png" alt="chap" id="module-b-chap">
-                    <img src="images/camion1.tiff" alt="chap" id="module-b-camion1">
-                    <img src="images/camion2.png" alt="chap" id="module-b-camion2">
-                </div>
-            </section>
+                    <!-- Patxi (Image flottante avec son halo) -->
+                    <div class="crew-wrapper" id="wrap-patxi">
+                        <img src="images/patxi.png" alt="Patxi" class="crew-member" id="char-patxi" data-presentation="images/p-patxi.png">
+                        <div class="light-beam"></div>
+                    </div>
 
-            <!-- COCKPIT : En travaux -->
+                    <!-- Mateo (Hitbox avec son halo) -->
+                    <div class="crew-wrapper" id="wrap-mateo">
+                        <div class="crew-member" id="char-mateo" data-presentation="images/p-mateo.png"></div>
+                        <div class="light-beam"></div>
+                    </div>
+
+                    <!-- Louis -->
+                    <div class="crew-wrapper" id="wrap-louis">
+                        <div class="crew-member" id="char-louis" data-presentation="images/p-louis.png"></div>
+                        <div class="light-beam"></div>
+                    </div>
+
+                    <!-- JB -->
+                    <div class="crew-wrapper" id="wrap-jb">
+                        <div class="crew-member" id="char-jb" data-presentation="images/p-jb.png"></div>
+                        <div class="light-beam"></div>
+                    </div>
+
+                    <!-- Lila -->
+                    <div class="crew-wrapper" id="wrap-lila">
+                        <div class="crew-member" id="char-lila" data-presentation="images/p-lila.png"></div>
+                        <div class="light-beam"></div>
+                    </div>
+                </div>
+            </section> <!-- La balise en trop a été retirée juste au-dessus de cette ligne ! -->
+
+            <!-- COCKPIT -->
             <section id="room-cockpit" class="scene">
                 <div id="cockpit-arriere-plan" class="layer">
-                    <img src="images/cocpit.png" alt="Vue du cockpit" class="bg-image">
+                    <img src="images/cockpit.png" alt="Vue du cockpit" class="bg-image">
                 </div>
                 <div class="construction-overlay">
                     <div class="construction-banner">🚧 EN TRAVAUX 🚧</div>
                 </div>
             </section>
-        </div> 
+            
+        </div> <!-- FIN DU PIN-CONTAINER -->
+        
         <div id="hologram-transition"></div>
     </div> 
 
-    <!-- OVERLAYS INTERACTIFS -->
-    
     <!-- L'Overlay Équipage avec GLITCH -->
     <div id="main-overlay" class="overlay">
         <div class="overlay-content">
             <span class="close-btn" id="close-crew">&times;</span>
-            
-            <!-- Structure Glitch de la fiche -->
             <div class="glitch-container" id="glitch-target">
                 <div class="glitch__img"></div>
                 <div class="glitch__img"></div>
                 <div class="glitch__img"></div>
             </div>
-
             <p style="color: #00ffcc; letter-spacing: 2px;">-- TRANSMISSION EN COURS --</p>
         </div>
     </div>
 
-    <!-- Autres overlays inchangés -->
+    <!-- Autres overlays -->
     <div id="overlay-infos-menu" class="overlay">
         <div class="terminal-content">
             <span class="close-btn" id="close-infos">&times;</span>
@@ -114,12 +126,8 @@
                 <h2 class="gallery-title">COMBARS</h2>
             </div>
             <div class="gallery-grid">
-                <div class="combar-slot">
-                    <img src="images/tablar.png" alt="Tablar" class="combar-image">
-                </div>
-                <div class="combar-slot">
-                    <img src="images/limoges.png" alt="Limoges" class="combar-image">
-                </div>
+                <div class="combar-slot"><img src="images/tablar.png" alt="Tablar" class="combar-image"></div>
+                <div class="combar-slot"><img src="images/limoges.png" alt="Limoges" class="combar-image"></div>
                 <div class="combar-slot">Photo 3</div>
                 <div class="combar-slot">Photo 4</div>
             </div>

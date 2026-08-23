@@ -7,17 +7,15 @@ body {
     overflow: hidden; background: #000;
 }
 #app-wrapper { width: 100vw; height: 100vh; position: relative; overflow: hidden; }
-#pin-container { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; }
+#pin-container { position: absolute; top: 0; left: 0; width: 200vw; height: 200vh; }
 .scene { position: absolute; width: 100vw; height: 100vh; overflow: hidden; }
 
-/* Positionnement des pièces */
 #room-chambre { top: 0; left: 0; }
 #room-module-b { top: 0; left: 100vw; }
-#room-cockpit { top: 100vh; left: 100vw; }
+#room-cockpit { top: 100vh; left: 100vw; z-index: 1; }
 .layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
 .bg-image { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-/* --- STYLE EN TRAVAUX --- */
 .construction-overlay {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0, 0, 0, 0.7); display: flex; justify-content: center;
@@ -32,47 +30,106 @@ body {
     letter-spacing: 5px;
 }
 
-/* --- NAVIGATION --- */
-#menu-navigation { position: fixed; top: 20px; left: 20px; z-index: 1000; display: flex; gap: 15px; }
-.nav-btn {
-    background: rgba(0, 20, 40, 0.8); border: 1px solid #00ffcc;
-    color: #00ffcc; padding: 10px 20px; cursor: pointer;
-    text-transform: uppercase; border-radius: 5px; font-weight: bold; pointer-events: auto;
-}
-
-/* --- DÉCORS ET PERSONNAGES --- */
 #decor-trailer, #decor-combar, #decor-infos, #decor-sg {
     position: absolute; cursor: pointer; z-index: 5; pointer-events: auto; background-color: transparent; 
 }
-#decor-trailer { left: 52%; bottom: 60%; height: 25vh; width: 25vh; }
-#decor-combar  { left: 77%; bottom: 50%; height: 20vh; width: 20vh; }
-#decor-infos   { right: 73%; bottom: 50%; height: 35vh; width: 35vh; }
 #decor-sg { top: 25%; right: 60%; width: 20vh; height: 25vh; }
 
-.crew-member {
-    position: absolute; bottom: 12%; height: 30vh; width: auto; 
-    filter: drop-shadow(0 0 8px rgba(0, 255, 204, 0.4));
-    cursor: pointer; pointer-events: auto;
+/* ========================================= */
+/* WRAPPERS ET PERSONNAGES (NOUVEAU SYSTÈME) */
+/* ========================================= */
+
+.crew-wrapper {
+    position: absolute;
+    /* Sert de base pour la lumière et le personnage */
 }
-#char-yanisr { left: 22%; bottom: 8%; height: 80vh; z-index: 10; clip-path: inset(36% 26% 7% 43%); } 
-#char-ln     { left: 45%; bottom: 35%; height: 20vh; z-index: 5; }  
-#char-jules  { left: 75%; bottom: 5%;  height: 40vh; z-index: 15; } 
-#char-patxi  { left: 78%; bottom: 50%; height: 23vh; z-index: 10; } 
-#char-mateo  { left: 43%; bottom: 22%;  height: 35vh; z-index: 15; clip-path: polygon(28% 0, 48% 0, 71% 84%, 38% 99%);} 
-#char-louis  { left: 13%; bottom: 17%; height: 65vh; z-index: 5; clip-path: polygon(50% 51%, 70% 36%, 67% 91%, 12% 54%);}  
-#char-jb { left: 44%; bottom: 19%; height: 55vh; z-index: 10; clip-path: polygon(63% 36%, 85% 36%, 78% 83%, 53% 82%); } 
-#char-lila   { left: 57%; bottom: 3%; height: 50vh; z-index: 8; clip-path: polygon(47% 4%, 70% 5%, 61% 96%, 35% 95%);}
-#module-b-table { position: absolute; left: 60%; bottom: 14%; height: 71vh; z-index: 20; pointer-events: none; }
-#module-b-chap { position: absolute; left: 63%; bottom: 28%; height: 17vh; z-index: 25; pointer-events: none; }
-#module-b-camion1 { position: absolute; left: 65%; bottom: 34%; height: 9vh; z-index: 23; pointer-events: none; }
-#module-b-camion2 { position: absolute; left: 63%; bottom: 34%; height: 5vh; z-index: 23; pointer-events: none; }
-#char-maite  { right: 88%; bottom: 15%; height: 28vh; z-index: 10; } 
-#char-capu   { right: 74%; bottom: 28%; height: 20vh; z-index: 5; }  
-#char-ad     { right: 60%; bottom: 10%; height: 32vh; z-index: 12; } 
-#char-yanis  { right: 46%; bottom: 35%; height: 18vh; z-index: 4; }  
-#char-louna  { right: 32%; bottom: 5%;  height: 38vh; z-index: 15; } 
-#char-lucas  { right: 18%; bottom: 20%; height: 25vh; z-index: 8; } 
-#char-antoine{ right: 4%;  bottom: 12%; height: 30vh; z-index: 10; }
+
+/* 1. L'image de Patxi garde ses proportions calées sur son wrapper */
+img.crew-member {
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%; height: 100%;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+/* 2. Les hitboxes (div) s'agrandissent pour englober la zone du halo ! */
+div.crew-member {
+    position: absolute;
+    bottom: 0;
+    left: -30%;       /* Déborde à gauche comme le halo */
+    width: 160%;      /* Même largeur que le halo */
+    height: 140%;     /* Monte jusqu'en haut du halo */
+    cursor: pointer;
+    pointer-events: auto;
+    transition: 0.3s;
+}
+
+#char-patxi {
+    object-fit: contain; /* Permet à l'image de s'adapter sans se déformer */
+}
+
+/* Positionnement des Wrappers (inclut les futurs personnages) */
+#wrap-yanisr { left: 22%; bottom: 8%;  height: 80vh; width: 15vw; z-index: 10; } 
+#wrap-ln     { left: 45%; bottom: 35%; height: 20vh; width: 8vw; z-index: 5; }  
+#wrap-jules  { left: 75%; bottom: 5%;  height: 40vh; width: 12vw; z-index: 15; } 
+#wrap-patxi  { left: 78%; bottom: 50%; height: 23vh; width: 10vw; z-index: 10; } 
+#wrap-mateo  { left: 57%; bottom: 15%; height: 30vh; width: 9vw; z-index: 15; } 
+#wrap-louis  { left: 36%; bottom: 10%; height: 30vh; width: 13vw; z-index: 5; }  
+#wrap-jb     { left: 70%; bottom: 15%; height: 30vh; width: 9vw; z-index: 10; } 
+#wrap-lila   { left: 80%; bottom: 6%;  height: 30vh; width: 9vw; z-index: 8; }
+#wrap-maite  { right: 88%; bottom: 15%; height: 28vh; width: 12vw; z-index: 10; } 
+#wrap-capu   { right: 74%; bottom: 28%; height: 20vh; width: 8vw; z-index: 5; }  
+#wrap-ad     { right: 60%; bottom: 10%; height: 32vh; width: 12vw; z-index: 12; } 
+#wrap-yanis  { right: 46%; bottom: 35%; height: 18vh; width: 8vw; z-index: 4; }  
+#wrap-louna  { right: 32%; bottom: 5%;  height: 38vh; width: 12vw; z-index: 15; } 
+#wrap-lucas  { right: 18%; bottom: 20%; height: 25vh; width: 10vw; z-index: 8; } 
+#wrap-antoine{ right: 4%;  bottom: 12%; height: 30vh; width: 15vw; z-index: 10; }
+
+/* Hitboxes découpées sur mesure */
+#char-yanisr { clip-path: inset(36% 26% 7% 43%); } 
+#char-mateo  { clip-path: polygon(28% 0, 48% 0, 71% 84%, 38% 99%); } 
+#char-louis  { clip-path: polygon(20% 0%, 80% 0%, 97% 73%, 0% 100%); }  
+#char-jb     { clip-path: polygon(20% 0%, 80% 0%, 97% 73%, 0% 100%); } 
+#char-lila   { clip-path: polygon(47% 4%, 70% 5%, 61% 96%, 35% 95%); }
+
+/* === LE HALO DE LUMIÈRE (L'effet "Scanner") === */
+.light-beam {
+    position: absolute;
+    bottom: 0;
+    left: -30%;
+    width: 160%;
+    height: 140%; /* Commence 40% plus haut que le perso pour un effet de projection */
+    
+    /* Dégradé vert holographique */
+    background: linear-gradient(to bottom, rgba(0, 255, 204, 0.45) 0%, rgba(0, 255, 204, 0.1) 60%, transparent 100%);
+    
+    /* Les pointillés à la source du faisceau */
+    border-top: 5px dashed #00ffcc;
+    
+    /* Forme en cône élargi vers le bas */
+    clip-path: polygon(35% 0%, 65% 0%, 100% 100%, 0% 100%);
+    
+    opacity: 0;
+    pointer-events: none; /* Ne bloque pas le clic */
+    transition: opacity 0.3s ease;
+    z-index: 10; /* Illumine PAR-DESSUS le personnage */
+}
+
+/* 
+  Magie du :has() -> La lumière ne s'allume QUE 
+  si on survole précisément le .crew-member (la hitbox découpée) 
+*/
+.crew-wrapper:has(.crew-member:hover) .light-beam {
+    opacity: 1;
+    animation: beam-flicker 2s infinite alternate;
+}
+
+/* Lueur pulsante quand allumé */
+@keyframes beam-flicker {
+    0%   { opacity: 0.3; filter: drop-shadow(0 0 5px #00ffcc); }
+    100% { opacity: 0.6; filter: drop-shadow(0 0 10px #00ffcc); }
+}
 
 /* --- OVERLAYS --- */
 .overlay {
@@ -82,73 +139,37 @@ body {
     opacity: 0; visibility: hidden;
 }
 .overlay-content {
-    background: #000a14;
-    border: 2px solid #00ffcc;
-    padding: 20px;
-    border-radius: 5px;
-    text-align: center;
-    
-    /* MODIFICATIONS ICI */
-    width: fit-content; /* La boîte s'adapte exactement à la largeur de l'image */
-    max-width: 95vw; /* Empêche de déborder sur les très petits écrans */
-    max-height: 95vh;
-    
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative; /* Indispensable pour garder la croix au bon endroit */
+    background: #000a14; border: 2px solid #00ffcc; padding: 20px;
+    border-radius: 5px; text-align: center; width: fit-content; 
+    max-width: 95vw; max-height: 95vh; display: flex;
+    flex-direction: column; align-items: center; position: relative; 
 }
 
-/* --- EFFET GLITCH (NOUVEAU) --- */
+/* --- EFFET GLITCH --- */
 .glitch-container {
-    position: relative;
-    width: 35vw;
-    max-width: 1000px; /* Adapte selon la taille de tes fiches personnages */
-    height: 75vh;
-    overflow: hidden;
-    margin-bottom: 15px;
-    background: #000; /* Fond noir pendant le chargement */
+    position: relative; width: 35vw; max-width: 1000px; 
+    height: 75vh; overflow: hidden; margin-bottom: 15px; background: #000; 
 }
-
 .glitch__img {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 0;
-    /* AJOUTÉ : Le cadre est maintenant sur les images glitchées */
-    border: 2px solid #00ffcc;
-    /* BONUS : Une petite lueur interne pour le style néon */
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background-size: contain; background-position: center;
+    background-repeat: no-repeat; opacity: 0; border: 2px solid #00ffcc;
     box-shadow: inset 0 0 15px rgba(0, 255, 204, 0.2);
 }
-
-/* Le premier calque devient visible quand on l'active */
 .glitch-active .glitch__img:nth-child(1),
 .glitch-active .glitch__img:nth-child(2),
-.glitch-active .glitch__img:nth-child(3) {
-    opacity: 1;
-}
+.glitch-active .glitch__img:nth-child(3) { opacity: 1; }
 
-/* Calque Cyan */
 .glitch-active .glitch__img:nth-child(2) {
-    transform: translate3d(-5px, 0, 0);
-    background-color: rgba(0, 255, 204, 0.3); 
-    background-blend-mode: color-burn;
-    mix-blend-mode: screen; /* NOUVEAU: Rend la superposition lumineuse */
+    transform: translate3d(-5px, 0, 0); background-color: rgba(0, 255, 204, 0.3); 
+    background-blend-mode: color-burn; mix-blend-mode: screen; 
     animation: glitch-anim-1 0.4s infinite linear alternate-reverse;
 }
-
-/* Calque Magenta */
 .glitch-active .glitch__img:nth-child(3) {
-    transform: translate3d(5px, 0, 0);
-    background-color: rgba(204, 0, 255, 0.3); 
-    background-blend-mode: color-burn;
-    mix-blend-mode: screen; /* NOUVEAU */
+    transform: translate3d(5px, 0, 0); background-color: rgba(204, 0, 255, 0.3); 
+    background-blend-mode: color-burn; mix-blend-mode: screen; 
     animation: glitch-anim-2 0.4s infinite linear alternate-reverse;
 }
-
 @keyframes glitch-anim-1 {
     0% { clip-path: polygon(0 2%, 100% 2%, 100% 5%, 0 5%); }
     10% { clip-path: polygon(0 15%, 100% 15%, 100% 15%, 0 15%); }
@@ -156,7 +177,6 @@ body {
     50% { clip-path: polygon(0 50%, 100% 50%, 100% 55%, 0 55%); }
     100% { clip-path: polygon(0 80%, 100% 80%, 100% 100%, 0 100%); }
 }
-
 @keyframes glitch-anim-2 {
     0% { clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%); }
     15% { clip-path: polygon(0 60%, 100% 60%, 100% 65%, 0 65%); }
@@ -164,7 +184,7 @@ body {
     100% { clip-path: polygon(0 40%, 100% 40%, 100% 80%, 0 80%); }
 }
 
-/* --- AUTRES MENUS (Galerie, Terminaux, etc.) --- */
+/* --- AUTRES MENUS --- */
 .gallery-wrapper {
     width: 70vw; max-width: 800px; height: 65vh;
     background: #000a14; border: 2px solid #ffaa00; padding: 20px; 
@@ -206,90 +226,49 @@ body {
 
 /* --- TRANSITION HOLOGRAPHIQUE --- */
 #hologram-transition {
-    position: absolute; /* Reste confiné dans app-wrapper */
+    position: absolute;
     inset: 0;
-    z-index: 1500; /* Au-dessus des pièces, sous la barre de navigation */
+    z-index: 1500;
     pointer-events: none;
     opacity: 0;
     visibility: hidden;
-    mix-blend-mode: screen; /* Fait ressortir les couleurs vives */
+    mix-blend-mode: screen;
 }
 
-/* Classe déclenchée par JavaScript */
 .holo-active {
     visibility: visible !important;
     animation: holo-flash 0.4s steps(5) forwards;
 }
 
-/* Le chaos visuel du piratage */
 @keyframes holo-flash {
     0% { opacity: 0; background: rgba(0, 255, 204, 0.8); }
     20% { opacity: 1; background: rgba(204, 0, 255, 0.9); clip-path: polygon(0 15%, 100% 15%, 100% 30%, 0 30%); }
     40% { opacity: 0.5; background: #fff; clip-path: polygon(0 70%, 100% 70%, 100% 80%, 0 80%); }
     60% { opacity: 1; background: rgba(0, 255, 204, 1); clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); filter: invert(1); }
     80% { opacity: 0.8; background: #000; clip-path: polygon(0 40%, 100% 40%, 100% 50%, 0 50%); filter: invert(0); }
-    100% { opacity: 0; background: transparent; }
+    100% { opacity: 0; background: transparent; clip-path: none; visibility: hidden; }
 }
 
 /* --- MENU CARTE TACTIQUE (MINIMAP) --- */
 #minimap-container {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    width: 280px;  /* Ajustable selon la taille voulue */
-    height: 220px;
-    background: rgba(0, 10, 20, 0.85);
-    border: 2px solid #00ffcc;
-    border-radius: 5px;
-    z-index: 1000;
-    box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
-    backdrop-filter: blur(4px); /* Petit effet de verre fumé */
+    position: fixed; top: 20px; left: 20px; width: 280px; height: 220px;
+    background: rgba(0, 10, 20, 0.85); border: 2px solid #00ffcc;
+    border-radius: 5px; z-index: 1000; box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
+    backdrop-filter: blur(4px); 
 }
-
 .minimap-title {
-    color: #00ffcc;
-    text-align: center;
-    font-size: 0.75rem;
-    letter-spacing: 3px;
-    padding: 6px;
-    border-bottom: 1px solid #00ffcc55;
-    background: rgba(0, 255, 204, 0.1);
-    font-weight: bold;
+    color: #00ffcc; text-align: center; font-size: 0.75rem; letter-spacing: 3px;
+    padding: 6px; border-bottom: 1px solid #00ffcc55;
+    background: rgba(0, 255, 204, 0.1); font-weight: bold;
 }
-
-#minimap-lines {
-    position: absolute;
-    top: 0;
-    left: 0;
-    pointer-events: none; /* Empêche le SVG de bloquer les clics sur les boutons */
-}
-
+#minimap-lines { position: absolute; top: 0; left: 0; pointer-events: none; }
 .nav-btn-map {
-    position: absolute;
-    background: #000;
-    border: 1px solid #00ffcc;
-    color: #00ffcc;
-    padding: 6px 10px;
-    cursor: pointer;
-    font-family: inherit;
-    font-weight: bold;
-    font-size: 0.65rem;
-    border-radius: 3px;
-    transition: all 0.3s ease;
-    /* Centre parfaitement le bouton sur le croisement de la ligne SVG */
-    transform: translate(-50%, -50%); 
+    position: absolute; background: #000; border: 1px solid #00ffcc;
+    color: #00ffcc; padding: 6px 10px; cursor: pointer; font-family: inherit;
+    font-weight: bold; font-size: 0.65rem; border-radius: 3px;
+    transition: all 0.3s ease; transform: translate(-50%, -50%); 
 }
-
-.nav-btn-map:hover, .nav-btn-map.active {
-    background: #00ffcc;
-    color: #000;
-    box-shadow: 0 0 10px #00ffcc;
-}
-
-/* 
-  Placement des pièces reflétant la carte globale
-  Les valeurs top et left correspondent aux coordonnées (x,y) des balises <line>
-*/
+.nav-btn-map:hover, .nav-btn-map.active { background: #00ffcc; color: #000; box-shadow: 0 0 10px #00ffcc; }
 #btn-chambre  { top: 40%; left: 25%; }
 #btn-module-b { top: 40%; left: 75%; }
 #btn-cockpit  { top: 80%; left: 75%; }
